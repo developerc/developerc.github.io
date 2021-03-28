@@ -1,11 +1,58 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!--<meta charset="UTF-8">-->
-    <title>hello</title>
+    <meta charset="UTF-8">
+    <title>НОД</title>   
 </head>
 <body>
-Hello world!
-Мой первый хостинг!
+<h3>Находим наибольший общий делитель</h3>
+<p>Здесь представлены мои упражнения в программировании на <b>TypeScript</b>.</p>
+<p>Дональд Кнут советует изучать алгоритмы с нахождения наибольшего общего делителя по алгоритму Евклида. Так и сделаем.</p>
+<p>Берем два числа Х и Y. Если Y больше чем Х, меняем их местами.</p>
+<p>Делим Х на Y, находим остаток. Если остаток равен нулю, значит Y является НОД. Завершаем поиск.</p>
+<p>Если нет, Х присваиваем значение Y, Y присваиваем значение остатка. Повторяем предыдущий пункт.</p>
+<p>Повторяем цикл до тех пор, пока Y не станет равен единице, универсальному общему делителю.</p>
+<p>Ниже код функции нахождения НОД и реализация. Код работает для целых положительных чисел.</p>
+
+<pre class="prettyprint">
+function getNOD(){
+    let x: number = Number((document.getElementById("input1") as HTMLInputElement).value);
+    let y: number =  Number((document.getElementById("input2") as HTMLInputElement).value);
+    let remainder: number;
+
+    if(x < y){
+        remainder = x;
+        x = y;
+        y = remainder;
+    }
+
+    function nod(x: number, y: number): number{
+    while(y > 1){
+        console.log("x = " + x + ", y = " + y);
+        remainder = x % y;
+        console.log("remainder = " + remainder);
+        if(remainder == 0){  // если остаток равен 0 завершаем цикл
+            return y;
+        }
+        x = y;
+        y = remainder;
+    }
+    // остается единица - универсальный общий делитель
+        return 1;
+    }
+    (document.getElementById("input3") as HTMLInputElement).value = String(nod(x, y));
+    console.log("вычисленный НОД = " + nod(x, y));
+}
+</pre>
+
+<p>Первое число:</p>
+<input type="text" size="20" id="input1">
+<p>Второе число:</p>
+<input type="text" size="20" id="input2">
+<p>Наибольший общий делитель:</p>
+<input type="text" size="20" id="input3">
+<input type="button" value="Найти НОД" onclick=getNOD()>
+<script src="nod.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
 </body>
 </html>
