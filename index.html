@@ -1,11 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>НОД</title>   
+  <title>НОД</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+<!--  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">-->
+  <!-- CSS only -->
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+	
 </head>
 <body>
-<h3>Находим наибольший общий делитель</h3>
+<!-- Image and text -->
+<nav class="navbar-brand mx-auto">
+  <a class="navbar-brand" href="#">
+    <img src="img/ts.png" width="50" height="50" class="d-inline-block align-top" alt="">
+    &nbsp; Андрей Саперов реализация алгоритмов на TypeScript
+  </a>
+</nav>
+
+<!-- <div class="container">-->
+ <div class="container-fluid">
+  <!-- Image and text -->
+
+ 
+  <div class="row">
+    <div class="col-sm-2" >
+      <ul class="nav flex-column">
+          <li class="nav-item">
+            <a class="nav-link active" href="index.html">НОД алгоритм Евклида</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link disabled" href="#">Ряд Фибоначчи</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link disabled" href="#">Задача Иосифа Флавия</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link disabled" href="#">Ханойская башня</a>
+          </li>
+      </ul>
+    </div>
+<!--    <div class="col-sm-8" style="background-color:pink;">-->
+    <div class="col-sm-8" >
+      <h3>Находим наибольший общий делитель</h3>
 <p>Здесь представлены мои упражнения в программировании на <b>TypeScript</b>.</p>
 <p>Дональд Кнут советует изучать алгоритмы с нахождения наибольшего общего делителя по алгоритму Евклида. Так и сделаем.</p>
 <p>Берем два числа Х и Y. Если Y больше чем Х, меняем их местами.</p>
@@ -52,7 +89,17 @@ function getNOD(){
 <p>Наибольший общий делитель:</p>
 <input type="text" size="20" id="input3">
 <input type="button" value="Найти НОД" onclick=getNOD()>
-<script src="nod.js"></script>
+    </div>
+    
+    <div class="col-sm-2" >
+    <!--      реклама-->
+    </div>
+  </div>
+  <hr class="my-4">
+<!--  <p>Сделано на Bootstrap</p>-->
+</div> 
+
+<script src="js/nod.js"></script>
 <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
 </body>
 </html>
