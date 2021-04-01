@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Ряд Фибоначчи</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- CSS only -->
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">	
+</head>
+<body>
+<!-- Image and text -->
+<nav class="navbar-brand mx-auto">
+  <a class="navbar-brand" href="#">
+    <img src="img/ts.png" width="50" height="50" class="d-inline-block align-top" alt="">
+    &nbsp; Андрей Саперов реализация алгоритмов на TypeScript
+  </a>
+</nav>
+
+<!-- <div class="container">-->
+ <div class="container-fluid">
+  <!-- Image and text -->
+
+ 
+  <div class="row">
+    <div class="col-sm-2" >
+      <ul class="nav flex-column">
+          <li class="nav-item">
+            <a class="nav-link active" href="index.html">НОД алгоритм Евклида</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link disabled" href="fibonacci.html">Ряд Фибоначчи</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link disabled" href="#">Задача Иосифа Флавия</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link disabled" href="#">Ханойская башня</a>
+          </li>
+      </ul>
+    </div>
+<!--    <div class="col-sm-8" style="background-color:pink;">-->
+    <div class="col-sm-8" >
+      <h3>Построим ряд Фибоначчи</h3>
+<p>О том, кто такой Фибоначчи и о свойствах ряда чисел, названных его именем, можно прочитать в Википедии.</p>
+<p>Разберем алгоритм и реализуем его на TypeScript.</p>
+<p>Алгоритм простой. Первое число ряда - ноль, второе число - один, каждое следующее число равно сумме двух предыдущих чисел ряда.</p>
+<p>Ниже код функции нахождения ряда Фибоначчи и реализация. Задайте количество чисел ряда и нажмите кнопку. Пишут, что чем больше чисел в ряду, тем ближе к совершенству. Мы разрешим задавать количество не больше 100. Что бы не было слишком хорошо. :)</p>
+
+<pre class="prettyprint">
+function fib(){
+    let cntFib: number = Number((document.getElementById("input1") as HTMLInputElement).value);    //количество чисел ряда заданное пользователем
+    let cntr: number = 0;       //счетчик итераций
+    let arrFib: number[] = [];  //массив с числами ряда фибоначчи
+    let tempFib: number;        //очередное число ряда фибоначчи
+    
+    if(cntFib > 100){
+        cntFib = 100;
+    }
+    
+    while(cntFib > cntr){
+        if(cntr < 2){
+            if(cntr == 0){
+                arrFib.push(0);
+            } else {
+                arrFib.push(1);
+            }
+        } else {
+            tempFib = arrFib[cntr - 2] + arrFib[cntr - 1];
+            arrFib.push(tempFib);
+        }
+        
+        cntr++;
+    }
+    (document.getElementById("text1") as HTMLInputElement).value = String(arrFib);
+    console.log(arrFib);
+}
+</pre>
+
+<p>Количество элементов ряда:</p>
+<input type="text" size="20" id="input1">
+<p></p>
+<textarea rows="10" cols="45" name="text1" id="text1"></textarea>
+<input type="button" value="Создать" onclick=fib()>
+   
+    </div>
+    
+    <div class="col-sm-2" >
+    <!--      реклама-->
+    </div>
+  </div>
+  <hr class="my-4">
+<!--  <p>Сделано на Bootstrap</p>-->
+</div> 
+
+<script src="js/fibonacci.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
+</body>
+</html>
