@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Задача Флавия</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- CSS only -->
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+	
+</head>
+<body>
+<!-- Image and text -->
+<nav class="navbar-brand mx-auto">
+  <a class="navbar-brand" href="#">
+    <img src="img/ts.png" width="50" height="50" class="d-inline-block align-top" alt="">
+    &nbsp; Андрей Саперов реализация алгоритмов на TypeScript
+  </a>
+</nav>
+
+ <div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-2" >
+      <ul class="nav flex-column">
+          <li class="nav-item">
+            <a class="nav-link active" href="index.html">НОД алгоритм Евклида</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" href="fibonacci.html">Ряд Фибоначчи</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link disabled" href="flavii.html">Задача Иосифа Флавия</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link disabled" href="#">Ханойская башня</a>
+          </li>
+      </ul>
+    </div>
+    <div class="col-sm-8" >
+      <h3>Задача Иосифа Флавия</h3>
+<p>Дело было в ветхозаветные времена. Тогда Римская империя владела многими землями на севере и на западе и еще много где. Владела она в том числе и Иудеей. Заставляли римляне иудеев подчиняться и платить дань, налоги по-сегодняшнему. Не всем это нравилось. Часть активного населения собиралась в отряды, занималась грабежами и убийствами римских солдат. В одном из таких отрядов участвовал и Иосиф Флавий.</p>
+<p>Однажды римское войско окружило отряд Флавия и взяли их в плен. Командир легионеров говорит повстанцам, что они уже надоели своим разбоем и он решил всех казнить, кроме одного. Правило будет такое. Пленные становятся в круг. Первого оставляют пока в живых, второго казнят. Третьего оставляют в живых, четвертого казнят. И так по кругу, пока не останется один. Его и отпустят.</p>
+<p>Иосиф Флавий быстро решил задачу, занял нужное место и остался в живых. А может просто угадал. А может дело было совсем не так. Свидетелей то не осталось.</p>
+<p>Короче, наша цель найти то место, в котором оказался тогда наш герой. Сколько было человек в отряде мы не знаем, поэтому нужно решить задачу в принципе для любого количества людей.</p>
+<p>Представим задачу в виде связного списка, структуры данных Linked List. Связный список состоит из узлов, связанных друг с другом по кругу. Каждый узел - это один солдат, имеющий линк с соседним узлом. Узел в нашей функции это класс Nod, который имеет поле name, обозначающее номер узла, его имя и поле next, имеющее тип Nod или null. Это линк к соседнему узлу, которого может не быть. В начале выполнения функции задаем значение переменной cntr, это количество человек в отряде. Переменные head, midNode, lastNode типа Nod обозначают узлы связного списка. Сначала создаем связный список с количеством узлов, заданных пользователем. Встаем на узел head (номер 1), накрываем следующий за ним узел номер 2 (меняем связь со следующего узла на тот, что через него, на третий) операцией  <pre class="prettyprint">head.next = head.next.next;</pre> и переходим с первого узла на следующий (теперь номер 3) операцией <pre class="prettyprint">head = head.next;</pre> и так далее до тех пор, пока линк на следующий узел будет показавать на самого себя <pre class="prettyprint">while(head.next != head)</pre> Номер этого оставшегося узла и показываем.</p>
+<img src="img/flavii.gif" class="rounded mx-auto d-block" alt="Схема поиска места">
+<p>Здесь схема поиска нужного места для пяти узлов.</p>
+<p>Ниже код функции нахождения правильной позиции и реализация. Код работает для целых положительных чисел.</p>
+
+<pre class="prettyprint">
+class Nod{
+    public name: string;
+    public next: Nod | null = null;
+    constructor(public n: string){
+        this.name = n;
+    }
+}
+
+function flav(){
+    let cntr: number = Number((document.getElementById("input1") as HTMLInputElement).value); //количество человек
+    let midNode: Nod;
+    let lastNode: Nod;
+    let head: Nod = new Nod("1");
+
+    lastNode = new Nod(String(cntr));
+    head.next = lastNode;
+    lastNode.next = head;
+    while(cntr > 2){    //заполняем цепочку нод
+        midNode = new Nod(String(--cntr));
+        midNode.next = lastNode;
+        head.next = midNode;
+        lastNode = midNode;
+    }
+
+    //пока head не начинает показывать на себя накрываем ноды через одну
+    while(head.next != head){    
+    head.next = head.next.next;
+    head = head.next;
+    }
+
+    //можем просмотреть кто остался
+    console.log("оставшаяся нода: " + head.name);
+    (document.getElementById("input3") as HTMLInputElement).value = head.name;
+}
+</pre>
+
+<p>Количество солдат в отряде:</p>
+<input type="text" size="20" id="input1">
+<p>Номер нужного места:</p>
+<input type="text" size="20" id="input3">
+<input type="button" value="Найти место" onclick=flav()>
+    </div>
+    
+    <div class="col-sm-2" >
+    <!--      реклама-->
+    </div>
+  </div>
+  <hr class="my-4">
+<!--  <p>Сделано на Bootstrap</p>-->
+</div> 
+
+<script src="js/flav.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
+</body>
+</html>
