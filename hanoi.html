@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Ханойская башня</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- CSS only -->
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+	
+</head>
+<body>
+<!-- Image and text -->
+<nav class="navbar-brand mx-auto">
+  <a class="navbar-brand" href="#">
+    <img src="img/ts.png" width="50" height="50" class="d-inline-block align-top" alt="">
+    &nbsp; Андрей Саперов реализация алгоритмов на TypeScript
+  </a>
+</nav>
+
+ <div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-2" >
+      <ul class="nav flex-column">
+          <li class="nav-item">
+            <a class="nav-link active" href="index.html">НОД алгоритм Евклида</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" href="fibonacci.html">Ряд Фибоначчи</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" href="flavii.html">Задача Иосифа Флавия</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link disabled" href="#">Ханойская башня</a>
+          </li>
+      </ul>
+    </div>
+    <div class="col-sm-8" >
+      <h3>Ханойская башня.</h3>
+<p>Головоломка придумана французским математиком Эдуардом Люка в 1883 году. Имеется пирамидка в виде колышка с насаженными на нее дисками разного размера.</p>
+<img src="img/hanoi-tower.jpg" width="500" height="300"  class="rounded mx-auto d-block" alt="Ханойская башня">
+<p>На колышек А диски насажены по уменьшению размера снизу вверх. Колышки B и С сначала пустые. Требуется переложить все диски с колышка А на колышек С по следующему правилу. Разрешается перекладывать диск на другой колышек, если тот пустой или на колышке диск большего размера, можно класть только  на больший диск. Нужно узнать сколько перемещений придется сделать для перемещения всех дисков.</p>
+<p>Сразу бросается в глаза, что для хранения номеров (размеров) дисков нужно использувать стек - структуру данных, реализующую принцип LIFO - последний пришел, первый вышел. Для этого создадим класс Stack. В нем в качестве хранилища данных используем массив данных типа number. В классе Stack определим функции size, push, pop, peek, isEmpty типичные для стека. Функция fillStackA заполняет стек А числами, соответствующими размерам дисков. Функции fAB, fBA и т.д. осуществляют перенос верхнего элемента из стека А на стек В и так далее в соответствии с названием. </p>
+<p>Проведя несколько экспериментов и переложив башни с разным количеством дисков можно заметить, что для четного количества колец выполняется рекурсивная последовательность перестановок А-В, А-С, В-С. Для нечетного количества дисков последовательность А-С, А-В, В-С. Направление перестановки осуществляется в соответствии с правилами, описанными выше. По окончании соответствующей тройки перестановок функция рекурсивно повторяется. Как только колышки А и В оказываются пустыми, завершаем выполнение функции.</p>
+<p>В функции changePlaces закодированы описанные действия. Остальные операторы в главной функции интуитивно понятны.</p>
+<img src="img/hanoi.gif" class="rounded mx-auto d-block" alt="Ханойская башня">
+<p>Ниже реализация функции подсчета количества перестановок для заданного Вами количества дисков. Вообще-то по легенде жрецы в том храме перекладывали золотые диски на алмазные колышки. И количество дисков было 64. И когда они переложат последний диск на свое место то наступит конец света, ибо долгое это занятие. Попробуйте задать число дисков 64. Не думаю что вы дождетесь выдачи результата. И это хорошо.</p>
+
+<pre class="prettyprint">
+function haoitower(){
+class Stack<Number>{
+    private storage: number[] = [];
+    constructor(private capacity: number = Infinity){}
+    
+    size(): number {
+        return this.storage.length;
+    }
+    
+    push(item: number): void{
+        if(this.size() === this.capacity){
+        throw Error("Stack has reached max capacity");
+    }
+    this.storage.push(item);
+    }
+    
+    pop(): number | undefined{
+        return this.storage.pop();
+    }
+
+    peek(): number | undefined{
+        return this.storage[this.size() - 1];
+    }
+
+    isEmpty(): boolean{
+        return this.size() === 0 ? true : false;
+    }
+}
+
+
+
+function fillStackA(sizeStack: number): void{
+    while(sizeStack > 0){
+        stackA.push(sizeStack--);
+    }
+}
+
+function fAB(): void{
+    let temp: number = stackA.pop();
+    stackB.push(temp);
+}
+
+function fBA(): void{
+    let temp: number = stackB.pop();
+    stackA.push(temp);
+}
+
+function fAC(): void{
+    let temp: number = stackA.pop();
+    stackC.push(temp);
+}
+
+function fCA(): void{
+    let temp: number = stackC.pop();
+    stackA.push(temp);
+}
+
+function fBC(): void{
+    let temp: number = stackB.pop();
+    stackC.push(temp);
+}
+
+function fCB(): void{
+    let temp: number = stackC.pop();
+    stackB.push(temp);
+}
+
+function changePlaces(sizeStack: number): void{
+    //А-В, А-С, В-С для четного количества колец
+    //А-С, А-В, В-С для нечетного
+    //направление перестановки зависит от величины колец
+    if(sizeStack % 2 == 0){
+        //если количество колец четное
+        //A-B
+        if ((stackA.isEmpty() && stackB.isEmpty()) || (stackA.isEmpty() && stackC.isEmpty())){
+                return;
+        } else {
+            cntr++;
+            if (!stackA.isEmpty() && ((stackB.isEmpty()) || (stackA.peek() < stackB.peek()))){
+                fAB();
+            } else {
+                fBA();
+            }
+        }
+        //A-C
+        if ((stackA.isEmpty() && stackB.isEmpty()) || (stackA.isEmpty() && stackC.isEmpty())){
+            return;
+        } else {
+            cntr++;
+            if (!stackA.isEmpty() && ((stackC.isEmpty()) || (stackA.peek() < stackC.peek()))){
+                fAC();
+            } else {
+                fCA();
+            }
+        }
+        //B-C
+        if ((stackA.isEmpty() && stackB.isEmpty()) || (stackA.isEmpty() && stackC.isEmpty())){
+            return;
+        } else {
+            cntr++;
+            if (!stackB.isEmpty() && ((stackC.isEmpty()) || (stackB.peek() < stackC.peek()))){
+                fBC();
+            } else {
+                fCB();
+            }
+        }
+    } else {
+    //если количество колец нечетное
+    //A-C
+        if ((stackA.isEmpty() && stackB.isEmpty()) || (stackA.isEmpty() && stackC.isEmpty())){
+            return;
+        } else {
+            cntr++;
+            if (!stackA.isEmpty() && ((stackC.isEmpty()) || (stackA.peek() < stackC.peek()))){
+                fAC();
+            } else {
+                fCA();
+            }
+        }
+    //A-B
+        if ((stackA.isEmpty() && stackB.isEmpty()) || (stackA.isEmpty() && stackC.isEmpty())){
+            return;
+        } else {
+            cntr++;
+            if (!stackA.isEmpty() && ((stackB.isEmpty()) || (stackA.peek() < stackB.peek()))){
+                fAB();
+            } else {
+                fBA();
+            }
+        }
+    //B-C
+        if ((stackA.isEmpty() && stackB.isEmpty()) || (stackA.isEmpty() && stackC.isEmpty())){
+            return;
+        } else {
+            cntr++;
+            if (!stackB.isEmpty() && ((stackC.isEmpty()) || (stackB.peek() < stackC.peek()))){
+                fBC();
+            } else {
+                fCB();
+            }
+        }
+    }
+    changePlaces(sizeStack);
+}
+
+let stackA = new Stack();
+let stackB = new Stack();
+let stackC = new Stack();
+let sizeStack: number;
+let cntr: number = 0;
+sizeStack = Number((document.getElementById("input1") as HTMLInputElement).value);
+fillStackA(sizeStack);
+console.log(stackA);
+changePlaces(sizeStack);
+console.log("cntr = " + cntr);
+(document.getElementById("input3") as HTMLInputElement).value = String(cntr);
+}
+</pre>
+
+<p>Количество дисков в пирамиде:</p>
+<input type="text" size="20" id="input1">
+<p>Количество перестановок:</p>
+<input type="text" size="20" id="input3">
+<input type="button" value="Найти перестановки" onclick=haoitower()>
+    </div>
+    
+    <div class="col-sm-2" >
+    <!--      реклама-->
+    </div>
+  </div>
+  <hr class="my-4">
+<!--  <p>Сделано на Bootstrap</p>-->
+</div> 
+
+<script src="hanoi.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
+</body>
+</html>
