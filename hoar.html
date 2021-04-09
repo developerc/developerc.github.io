@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Сортировка по Хоару</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- CSS only -->
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+	
+</head>
+<body onload="sortAlgorithm()">
+<!-- Image and text -->
+<nav class="navbar-brand mx-auto">
+  <a class="navbar-brand" href="#">
+    <img src="img/ts.png" width="50" height="50" class="d-inline-block align-top" alt="">
+    &nbsp Андрей Саперов реализация алгоритмов на TypeScript
+  </a>
+</nav>
+
+<!-- <div class="container">-->
+ <div class="container-fluid">
+  <!-- Image and text -->
+
+ 
+  <div class="row">
+    <div class="col-sm-2" >
+      <ul class="nav flex-column">
+          <li class="nav-item">
+            <a class="nav-link active" href="index.html">НОД алгоритм Евклида</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" href="fibonacci.html">Ряд Фибоначчи</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" href="flavii.html">Задача Иосифа Флавия</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" href="hanoi.html">Ханойская башня</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link disabled" href="hoar.html">Сортировка по алгоритму Хоара</a>
+          </li>
+      </ul>
+    </div>
+<!--    <div class="col-sm-8" style="background-color:pink;">-->
+    <div class="col-sm-8" >
+      <h3>Быстрая сортировка списков по алгоритму Хоара</h3>
+<p>В своей книге "Исскуство программирования" Дональд Кнут описывает много алгоритмов сортировки. Процедуру по алгоритму Хоара относит к обменной сортировке с разделением.
+   Этот алгоритм считается одним из самых быстрых для последовательной сортировки чисел. Разработал его англичанин Чарльз Хоар.</p>
+<p>Суть алгоритма следующая. Допустим, имеется массив чисел:</p>
+<p>3, 0, 1, 8, 7, 2, 5, 4, 9, 6</p>
+<p>Сначала требуется выбрать базовое число. Обычно это первое число, тройка. Индекс этого числа 0. Сравниваем базовое число со вторым числом, имеющим наибольший индекс в массиве. 
+  Это шестерка. Левое число меньше чем правое, перестановку не делаем. Индекс второго числа уменьшаем на один. Теперь это число 9. Левое число меньше правого, перестановку не 
+  делаем. Индекс второго числа уменьшаем на единицу пока не доходим до числа два. индекс его 5. Левое число больше правого, делаем перестановку. Теперь 3 это элемент
+  массива с индексом 5, 2 это элемент массива с индексом 0. Массив теперь выглядит так:</p>
+<p>2, 0, 1, 8, 7, 3, 5, 4, 9, 6</p>
+<p>Базовое число осталось 3, его индекс 5. Теперь проверку продолжаем слева на право, начиная с прежнего индекса базового числа плюс 1, это индекс 1. Сравниваем первое число 3 и второе 0.
+  Левое число меньше правого, перестановку не делаем.  Индекс второго числа увеличиваем на 1, это число 1 с индексом 2. Левое число меньше правого, перестановку не делаем. 
+  Индекс второго числа увеличиваем на 1, это число 8 с индексом 3. Левое число больше правого, меняем числа местами. Теперь базовое число 3 имеет индекс 3, число 8 имеет 
+  индекс 5. Массив стал выглядеть так:</p>
+<p>2, 0, 1, 3, 7, 8, 5, 4, 9, 6</p>
+<p>Теперь базовое число 3 с индексом 3 Сравниваем со вторым числом, имеющим индекс на единицу меньший прежнего индекса базового числа. Это число 7 с индексом 4. 
+  Левое число меньше правого и перестановку не делаем. Уменьшаем индекс второго числа на 1, получаем индекс 3. На этом месте находится базовое число.
+  Завершаем первый цикл сортировки.  Видим, что базовое число делит массив на две части. Любое число левой части меньше любого числа из правой. Продолжим рекурсивно 
+  проверку и перестановку чисел левой, а затем правой частей.</p>
+  <p>Дополнительно надо заметить что такое движение зигзагом по массиву увеличивает вероятность того, что массив будет поделен базовым числом на две приблизительно равные 
+    части. Это обеспечивает уменьшение сложности операции с О(n<sup>2</sup>) до O(n&middot;log<sub>2</sub> n)</p>
+<p>Бесподобный ролик, визуализирующий процесс, имеется <a href="https://www.youtube.com/watch?v=oS5bZdtEhHY" target="_blank">на Ютубе.</a></p>    
+<p>Ниже описание реализации. Функция hoarsort имеет аргументы begin и end, которые обозначают индексы первого и второго чисел. Индексы двигаются друг другу навстречу. 
+  Когда индексы совпадают, выполнение функции завершается. Сначала находится индекс базового числа выполнением функции partitition. Базовое число делит кусок массива на 
+две части. С каждой из частей рекурсивно выполняется функция hoarsort.</p>    
+
+<pre class="prettyprint">
+  function sortAlgorithm(){
+    let mainArr: number[] = [];
+    let btn1 = document.getElementById("btn1");
+    let btn2 = document.getElementById("btn2");
+    btn1.addEventListener("click", (e:Event) => handleClickBtn1()); //получаем массив для сортировки
+    btn2.addEventListener("click", (e:Event) => handleClickBtn2()); //сортируем массив
+
+    function handleClickBtn1(): any {   
+        let nextNum: number = Number((document.getElementById("input1") as HTMLInputElement).value); //следующее число
+        mainArr.push(nextNum);
+        console.log(mainArr);
+        (document.getElementById("text1") as HTMLInputElement).value = String(mainArr);
+    }
+
+    function handleClickBtn2(): any {   
+        console.log(mainArr);
+        let begin: number = 0;
+        let end: number = mainArr.length - 1;
+        let directionForward: boolean = true;
+        hoarsort(begin, end);
+        console.log(mainArr);
+        (document.getElementById("text2") as HTMLInputElement).value = String(mainArr);
+
+        function partitition(begin: number, end:number): number{
+            while(begin < end){
+                if(mainArr[begin] > mainArr[end]) {
+                    let temp: number = mainArr[begin];  //swap
+                    mainArr[begin] = mainArr[end];
+                    mainArr[end] = temp;
+                    directionForward = !directionForward;
+                }
+                if(directionForward){
+                    end--;
+                } else {
+                    begin++;
+                }
+            }
+            return begin;
+            }
+            
+            function hoarsort(begin: number, end:number): void {
+                if(begin >= end){
+                    return;
+                }
+                let base: number = partitition(begin, end);
+                hoarsort(begin, base - 1);
+                hoarsort(base + 1, end);
+            }
+    }
+}
+</pre>
+
+<p>Добавить число:</p>
+<input type="text" size="20" id="input1">
+<input type="button" id="btn1" value="Добавить число">
+<p>Исходный массив чисел:</p>
+<textarea rows="10" cols="45" name="text1" id="text1"></textarea>
+<p>Отсортированный массив:</p>
+<textarea rows="10" cols="45" name="text2" id="text2"></textarea>
+<input type="button" id="btn2" value="Сортировать массив">
+    </div>
+    
+    <div class="col-sm-2" >
+    <!--      реклама-->
+    </div>
+  </div>
+  <hr class="my-4">
+  <p></p>
+</div> 
+
+<script src="js/sortbyhoar.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
+</body>
+</html>
